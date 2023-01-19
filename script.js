@@ -16,8 +16,8 @@ let computerSelection;
 let score = 0;
 let compScore = 0;
 
-HumanScore.innerHTML = `Your scrore :${score}`;
-computerScore.innerHTML = `Computer score :${compScore}`;
+HumanScore.innerHTML = `Your scrore :`;
+computerScore.innerHTML = `Computer score :`;
 
 // player selection and how it to the screen
 
@@ -57,8 +57,8 @@ container.addEventListener("click", function () {
   if (score < 5 && compScore < 5) {
     game();
   } else {
-    restart();
     alert("Session restarted the game is ended");
+    restart();
   }
 });
 
@@ -120,6 +120,8 @@ function restart() {
   images.forEach((img) => {
     img.classList.remove("AI-choice");
   });
+  score = 0;
+  compScore = 0;
   HumanScore.innerHTML = `Your scrore :0`;
   computerScore.innerHTML = `Computer score :0`;
 }
