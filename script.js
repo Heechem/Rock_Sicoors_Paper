@@ -9,8 +9,15 @@ const restartBtn = document.querySelector(".restart");
 const humanArea = document.querySelector(".human-choice");
 const aiChoice = document.querySelector(".computer-choice");
 const playBtn = document.querySelector(".play-buttons");
+const HumanScore = document.querySelector(".human-score");
+const computerScore = document.querySelector(".AI-score");
 
 let computerSelection;
+let score = 0;
+let compScore = 0;
+
+HumanScore.innerHTML = `Your scrore :${score}`;
+computerScore.innerHTML = `Computer score :${compScore}`;
 
 // player selection and how it to the screen
 
@@ -27,8 +34,6 @@ let PlayerSelection = container.addEventListener("click", function (e) {
       img.classList.add("selected");
     }
   });
-
-  console.log(PlayerSelection);
 });
 
 // get the computer choice
@@ -48,7 +53,14 @@ function computerAppear(e) {
   });
 }
 
-container.addEventListener("click", game);
+container.addEventListener("click", function () {
+  if (score < 5 && compScore < 5) {
+    game();
+  } else {
+    restart();
+    alert("Session restarted the game is ended");
+  }
+});
 
 // function computerAppear(computerSelection) {
 //   images.forEach((image) => {
@@ -67,17 +79,18 @@ function playRound(PlayerSelection, computerSelection) {
   const PlayerSensitive = PlayerSelection.toUpperCase().trim();
   const computerSensitive = computerSelection.toUpperCase().trim();
 
-  alert(`The AI choosed ${computerSensitive}`);
+  // alert(`The AI choosed ${computerSensitive}`);
 
   // start by the comparaison
   if (PlayerSensitive.trim() === computerSelection.toUpperCase().trim()) {
     alert("No one won please choose again");
-  } else winner(PlayerSensitive, computerSensitive);
+  } else {
+    setTimeout(winner(PlayerSensitive, computerSensitive), 1000);
+  }
 }
 
 function game() {
   computerSelection = getComputerChoice().toLocaleLowerCase();
-  console.log(computerSelection);
 
   computerAppear(computerSelection);
 
@@ -93,10 +106,12 @@ function game() {
   //     image.classList.add("AI-choice");
   //   }
   // });
+
   // playRound(PlayerSelection, computerSelection);
 }
 
-// restart game
+// restart game and score
+
 function restart() {
   images.forEach((img) => {
     img.classList.remove("selected");
@@ -105,35 +120,50 @@ function restart() {
   images.forEach((img) => {
     img.classList.remove("AI-choice");
   });
+  HumanScore.innerHTML = `Your scrore :0`;
+  computerScore.innerHTML = `Computer score :0`;
 }
 
 // Start the game
 
 startGame.addEventListener("click", (e) => {
-  game();
+  e.preventDefault();
+  // game();
   playRound(PlayerSelection, computerSelection);
 
   images.forEach((img) => {
     img.classList.remove("selected");
   });
+  images.forEach((img) => {
+    img.classList.remove("AI-choice");
+  });
 });
 restartBtn.addEventListener("click", restart);
 
 //function that compares the winner
+
 function winner(P1, P2) {
   if ((P1 == "PAPER" && P2 == "ROCK") || (P1 == "SCISSORS" && P2 == "PAPER")) {
     alert(`You win ! ${P1} beats ${P2}`);
+    score++;
+    HumanScore.innerHTML = `Your scrore : ${score}`;
   } else if (
     (P1 == "ROCK" && P2 == "SCISSORS") ||
     (P1 == "PAPER" && P2 == "ROCK")
   ) {
     alert(`You win !${P1} beats ${P2}`);
+    score++;
+    HumanScore.innerHTML = `Your scrore : ${score}`;
   } else if (
     (P1 == "ROCK" && P2 == "PAPER") ||
     (P1 == "PAPER" && P2 == "SCISSORS")
   ) {
     alert(`You Lost !! ${P2} beats ${P1}`);
+    compScore++;
+    computerScore.innerHTML = `computer score is ${compScore}`;
   } else if (P1 == "SCISSORS" && P2 == "ROCK") {
     alert(`You Lost !! ${P2} beats ${P1}`);
+    compScore++;
+    computerScore.innerHTML = `computer score is ${compScore}`;
   }
 }
