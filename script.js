@@ -11,13 +11,14 @@ const aiChoice = document.querySelector(".computer-choice");
 const playBtn = document.querySelector(".play-buttons");
 const HumanScore = document.querySelector(".human-score");
 const computerScore = document.querySelector(".AI-score");
+const finalMessage = document.getElementById("message");
 
 let computerSelection;
 let score = 0;
 let compScore = 0;
 
-HumanScore.innerHTML = `Your scrore :`;
-computerScore.innerHTML = `Computer score :`;
+HumanScore.innerHTML = `Your scrore : 0`;
+computerScore.innerHTML = `Computer score : 0`;
 
 // player selection and how it to the screen
 
@@ -57,8 +58,7 @@ container.addEventListener("click", function () {
   if (score < 5 && compScore < 5) {
     game();
   } else {
-    alert("Session restarted the game is ended");
-    restart();
+    finalMessage.classList.add("visible");
   }
 });
 
@@ -83,7 +83,7 @@ function playRound(PlayerSelection, computerSelection) {
 
   // start by the comparaison
   if (PlayerSensitive.trim() === computerSelection.toUpperCase().trim()) {
-    alert("No one won please choose again");
+    alert("Equality choose again");
   } else {
     setTimeout(winner(PlayerSensitive, computerSensitive), 1000);
   }
@@ -124,6 +124,7 @@ function restart() {
   compScore = 0;
   HumanScore.innerHTML = `Your scrore :0`;
   computerScore.innerHTML = `Computer score :0`;
+  finalMessage.classList.remove("visible");
 }
 
 // Start the game
@@ -166,6 +167,6 @@ function winner(P1, P2) {
   } else if (P1 == "SCISSORS" && P2 == "ROCK") {
     alert(`You Lost !! ${P2} beats ${P1}`);
     compScore++;
-    computerScore.innerHTML = `computer score is ${compScore}`;
+    computerScore.innerHTML = `computer score is : ${compScore}`;
   }
 }

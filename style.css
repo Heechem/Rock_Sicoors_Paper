@@ -1,9 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: "Press Start 2P", sans-serif;
+}
+
 body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100vh;
   position: relative;
+  background-image: url("https://media4.giphy.com/media/3ohzdGnD5vAud1NCZW/giphy.gif");
+  background-size: cover;
+  background-repeat: repeat;
+}
+header {
+  display: flex;
+  background: linear-gradient(#e66465, #9198e5);
+  height: 100px;
+  width: 100%;
+  z-index: -2;
+  color: #eee;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: large;
 }
 
 .container {
@@ -40,23 +61,22 @@ button {
 
 .play-buttons .start {
   background-color: green;
-  font-size: large;
+
   cursor: pointer;
 }
 
 .play-buttons .restart {
-  font-size: large;
   cursor: pointer;
 }
 
 .AI-score {
   position: absolute;
-  top: 40px;
+  top: 20px;
   left: 20px;
 }
 .human-score {
   position: absolute;
-  top: 40px;
+  top: 20px;
   right: 20px;
 }
 
@@ -75,6 +95,24 @@ img {
   opacity: 0;
 }
 
+.container input.rock {
+  background: url("https://icons.iconarchive.com/icons/raindropmemory/down-to-earth/48/G12-Rock-icon.png");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.container input.scissors {
+  background: url("https://icons.iconarchive.com/icons/mattahan/umicons/48/Cut-icon.png");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.container input.paper {
+  background: url("https://icons.iconarchive.com/icons/mirella-gabriele/fantasy-mediaeval/64/Paper-icon.png");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .Human-choice img.selected {
   opacity: 1;
 
@@ -90,4 +128,44 @@ img {
 .computer-choice img.AI-choice {
   opacity: 1;
   transform: translateY(50%);
+}
+
+footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.7;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 25%;
+  padding: 20px;
+  text-align: center;
+  font-size: 2rem;
+  opacity: 0;
+  z-index: 300;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -150%);
+  transition: 0.9s ease-in;
+  color: #eee;
+}
+
+#message.visible {
+  opacity: 1;
+  transform: translate(-50%, 150%);
+}
+
+.container .no-winner {
+  height: 60px;
+  width: 100;
 }
