@@ -5,3 +5,5 @@ Only the JS part
 
 adding the basic logic of the game
 Print to the screen the results and score
+
+added equlity UI
