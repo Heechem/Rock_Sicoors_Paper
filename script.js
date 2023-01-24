@@ -13,6 +13,7 @@ const HumanScore = document.querySelector(".human-score");
 const computerScore = document.querySelector(".AI-score");
 const finalMessage = document.getElementById("message");
 const equalityMsg = document.querySelector(".equality");
+const winningMsg = document.querySelector(".winning-message");
 
 let computerSelection;
 let score = 0;
@@ -58,24 +59,20 @@ function computerAppear(e) {
 }
 
 container.addEventListener("click", function (e) {
-  if (score < 5 && compScore < 5) {
-    game();
-  } else {
-    finalMessage.classList.add("visible");
-    startGame.disabled = true;
+  if (
+    e.target.className === "paper" ||
+    e.target.className === "rock" ||
+    e.target.className === "scissors"
+  ) {
+    if (score <= 4 && compScore <= 4) {
+      game();
+      removeVisible();
+    } else {
+      finalMessage.classList.add("visible");
+      startGame.disabled = true;
+    }
   }
 });
-
-// function computerAppear(computerSelection) {
-//   images.forEach((image) => {
-//     if (
-//       aiChoice.children.className === computerSelection &&
-//       image.className === computerSelection
-//     ) {
-//       image.classList.add("AI-choice");
-//     }
-//   });
-// }
 
 // the game function
 
@@ -98,27 +95,13 @@ function game() {
   computerSelection = getComputerChoice().toLocaleLowerCase();
 
   computerAppear(computerSelection);
-
-  // for (let i = 0; i < 5; i++) {
-  //   const PlayerSelection = prompt(
-  //     "Please choose between : Rock, Paper, Scissors"
-  //   );
-  //   const computerSelection = getComputerChoice();
-  //   playRound(PlayerSelection, computerSelection);
-  // }
-  // images.forEach((image) => {
-  //   if (image.className === computerSelection.toLocaleLowerCase()) {
-  //     image.classList.add("AI-choice");
-  //   }
-  // });
-
-  // playRound(PlayerSelection, computerSelection);
 }
 
 // restart game and score
 
 function restart() {
-  equalityMsg.classList.remove("visible");
+  // equalityMsg.classList.remove("visible");
+  removeVisible();
   startGame.disabled = false;
   images.forEach((img) => {
     img.classList.remove("selected");
@@ -138,6 +121,13 @@ function restart() {
 
 startGame.addEventListener("click", (e) => {
   // game();
+  if (equalityMsg.classList.contains("visible")) {
+    removeVisible();
+  }
+
+  if (winningMsg.classList.contains("visible")) {
+    removeVisible();
+  }
 
   playRound(PlayerSelection, computerSelection);
 
@@ -155,25 +145,34 @@ restartBtn.addEventListener("click", restart);
 
 function winner(P1, P2) {
   if ((P1 == "PAPER" && P2 == "ROCK") || (P1 == "SCISSORS" && P2 == "PAPER")) {
-    alert(`You win ! ${P1} beats ${P2}`);
+    // alert(`You win ! ${P1} beats ${P2}`);
+    winningMsg.classList.add("visible");
+    winningMsg.innerHTML = `You win ! ${P1} beats ${P2}`;
     score++;
     HumanScore.innerHTML = `Your scrore : ${score}`;
   } else if (
     (P1 == "ROCK" && P2 == "SCISSORS") ||
     (P1 == "PAPER" && P2 == "ROCK")
   ) {
-    alert(`You win !${P1} beats ${P2}`);
+    winningMsg.classList.add("visible");
+    winningMsg.innerHTML = `You win !${P1} beats ${P2}`;
+    // alert(`You win !${P1} beats ${P2}`);
     score++;
     HumanScore.innerHTML = `Your scrore : ${score}`;
   } else if (
     (P1 == "ROCK" && P2 == "PAPER") ||
     (P1 == "PAPER" && P2 == "SCISSORS")
   ) {
-    alert(`You Lost !! ${P2} beats ${P1}`);
+    winningMsg.classList.add("visible");
+    winningMsg.innerHTML = `You Lost !! ${P2} beats ${P1}`;
+
+    // alert(`You Lost !! ${P2} beats ${P1}`);
     compScore++;
     computerScore.innerHTML = `computer score is ${compScore}`;
   } else if (P1 == "SCISSORS" && P2 == "ROCK") {
-    alert(`You Lost !! ${P2} beats ${P1}`);
+    winningMsg.classList.add("visible");
+    winningMsg.innerHTML = `You Lost !! ${P2} beats ${P1}`;
+    // alert(`You Lost !! ${P2} beats ${P1}`);
     compScore++;
     console.log("hello");
 
@@ -187,5 +186,7 @@ function winner(P1, P2) {
 
 function removeVisible() {
   equalityMsg.classList.remove("visible");
+  winningMsg.classList.remove("visible");
 }
 equalityMsg.addEventListener("click", removeVisible);
+winningMsg.addEventListener("click", removeVisible);
